@@ -10,12 +10,10 @@ typedef struct Memory_Block {
 
 static Memory_Block* firstblock;
 static void* memorypool;
-static size_t memorysize;
 
 void mem_init(size_t size){
     memorypool = malloc(size);
-    memorysize = size;
-    firstblock = (Memory_Block*)memorypool;
+    firstblock = (Memory_Block*)(char*)memorypool;
     (*firstblock).free = 1;
     (*firstblock).size = size;
     (*firstblock).next = NULL;
@@ -23,7 +21,7 @@ void mem_init(size_t size){
 
 void* mem_alloc(size_t size) {
     if (size == 0) {
-        return NULL; // Handle zero-size allocation, return NULL
+        return NULL; 
     }
 
     Memory_Block* current_block = firstblock;
