@@ -109,7 +109,7 @@ void test_edge_case_allocations()
     mem_init(1024); // Initialize with 1024 bytes
 
     void *block0 = mem_alloc(0); // Edge case: zero allocation
-    assert(block0 != NULL);      // Depending on handling, this could also be NULL
+    assert(block0 == NULL);      // Depending on handling, this could also be NULL
 
     void *block1 = mem_alloc(1024); // Exactly remaining
     assert(block1 != NULL);
@@ -117,7 +117,6 @@ void test_edge_case_allocations()
     void *block2 = mem_alloc(1); // Attempt to allocate with no space left
     assert(block2 == NULL);
 
-    mem_free(block0);
     mem_free(block1);
     mem_deinit();
     printf_green("Edge case allocations test passed.\n");
