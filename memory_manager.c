@@ -8,15 +8,15 @@ typedef struct Memory_Block {
     struct Memory_Block* next;
 } Memory_Block;
 
-static Memory_Block* firstblock;
+static Memory_Block* first_block;
 static void* memorypool;
 
 void mem_init(size_t size){
     memorypool = malloc(size);
-    firstblock = (Memory_Block*)(char*)memorypool;
-    (*firstblock).free = 1;
-    (*firstblock).size = size;
-    (*firstblock).next = NULL;
+    first_block = (Memory_Block*)(char*)memorypool;
+    (*first_block).free = 1;
+    (*first_block).size = size;
+    (*first_block).next = NULL;
 }
 
 void* mem_alloc(size_t size) {
@@ -24,7 +24,7 @@ void* mem_alloc(size_t size) {
         return NULL; 
     }
 
-    Memory_Block* current_block = firstblock;
+    Memory_Block* current_block = first_block;
 
     while(current_block){
         if ((*current_block).free == 1 && (*current_block).size >= size){

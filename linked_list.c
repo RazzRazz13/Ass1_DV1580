@@ -9,9 +9,35 @@
     struct Node* next; // A pointer to the next node in the List
   }Node;
   
-void list_init(Node** head){}
 
-void list_insert(Node** head, int data){}
+static Node* firstnode;
+
+void list_init(Node** head){
+  mem_init(1024);
+  *head = NULL;
+}
+
+void list_insert(Node** head, int data){
+
+  Node* next_node = (Node*)mem_alloc(sizeof(Node));
+
+  (*next_node).data = data;
+  (*next_node).next = NULL;
+
+
+  Node* current_node = *head;
+
+  if (current_node == NULL){
+    *head = next_node;
+    return;
+  }
+
+  while((*current_node).next != NULL){
+    current_node = (*current_node).next;
+  }
+  (*current_node).next = next_node;
+
+}
 
 void list_insert_after(Node* prev_node, int data){}
 
@@ -27,4 +53,12 @@ int list_count_nodes(Node** head){}
 
 void list_cleanup(Node** head){}
 
-int main() {}
+int main() {
+  printf("Testing list_insert...\n");
+  Node *head = NULL;
+  list_init(&head);
+  list_insert(&head, 10);
+  printf("Testing list_insert...\n");
+
+
+}
