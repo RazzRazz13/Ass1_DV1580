@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <assert.h>
 
 typedef struct Memory_Block {
     int free;
@@ -40,7 +41,7 @@ void* mem_alloc(size_t size) {
             } else {
                 (*current_block).free = 0;
             }
-            return (char*)current_block + sizeof(Memory_Block);
+            return (char*)current_block;
         }
         current_block = (*current_block).next;
     }

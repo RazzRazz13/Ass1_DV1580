@@ -1,5 +1,8 @@
 #include "linked_list.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 #include <assert.h>
 
 #include "common_defs.h"

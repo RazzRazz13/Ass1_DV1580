@@ -4,10 +4,10 @@
 #include <stdint.h>
 #include "memory_manager.h"
 
- typedef struct Node {
-    uint16_t data; // Stores the data as an unsigned 16-bit integer
-    struct Node* next; // A pointer to the next node in the List
-  }Node;
+typedef struct Node {
+  uint16_t data; // Stores the data as an unsigned 16-bit integer
+  struct Node* next; // A pointer to the next node in the List
+}Node;
   
 
 static Node* firstnode;
@@ -53,10 +53,23 @@ void list_insert_before(Node** head, Node* next_node, int data){
   
 }
 
-void list_delete(Node** head, int data){}
+void list_delete(Node** head, int data){
+  Node* current_node = *head;
+  Node* previous_node;
+
+  while(current_node){
+    if((*current_node).data == data){
+      (*previous_node).next = (*current_node).next;
+      mem_free((char*)current_node);
+      return;
+    }
+    previous_node = current_node;
+    current_node = (*current_node).next;
+  }
+
+}
 
 Node* list_search(Node** head, int data){
-  int pointer = 0;
   Node* current_node = *head;
   while(current_node){
     if((*current_node).data == data){
@@ -66,35 +79,52 @@ Node* list_search(Node** head, int data){
   }
 }
 
-void list_display(Node** head){}
-
-int list_count_nodes(Node** head){}
-
-void list_cleanup(Node** head){}
-
-
-void assert_node_value(Node *node, uint16_t expected_value, const char *test_name)
-{
-    if (node == NULL || node->data != expected_value)
-    {
-        printf("FAIL [%s]: Expected %hu, got %hu\n", test_name, expected_value, node ? node->data : 0);
-    }
-    else
-    {
-        printf("PASS [%s]: Expected %hu\n", test_name, expected_value);
-    }
+void list_display(Node** head){
+  Node* current_node = *head;
+  int count = 0;
+  int myNumbers[4];
+  while(current_node){
+    myNumbers[count] = (*current_node).data;
+    current_node = (*current_node).next;
+    count = ++count;
+  }
 }
 
-int main() {
-  printf("Testing list_search...\n");
-  Node *head = NULL;
-  list_init(&head);
-  list_insert(&head, 10);
-  list_insert(&head, 20);
-  Node *found = list_search(&head, 10);
-  assert_node_value(found, 10, "test_search");
+void list_display_range(Node** head, Node* start_node, Node* end_node){
+  Node* current_node = *head;
+  int count = 0;
+  int active;
+  int myNumbers[4];
+  while(current_node){
+    if (current_node == start_node){
+      active = 1;
+    }
+    if (active == 1){
+      myNumbers[count] = (*current_node).data;
+      count = ++count;
+    }
+    if (current_node == end_node){
+      active = 0;
+    }
+  current_node = (*current_node).next;
+  }
+}
 
-  list_cleanup(&head);
+int list_count_nodes(Node** head){
+  Node* current_node = *head;
+  int count = 0;
+  while(current_node){
+      count = ++count;
+  }
+  return count;
+}
 
-  //list_cleanup(&head);  
+void list_cleanup(Node** head){
+  Node* current_node = *head;
+  while(current_node){
+    Node* next_node = (*current_node).next;
+    mem_free((char*)current_node);
+    current_node = next_node;
+  }
+  mem_deinit();
 }
