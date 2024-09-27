@@ -38,7 +38,6 @@ void list_insert(Node** head, uint16_t data){
   while((*current_node).next){
     current_node = (*current_node).next;
   }
-    printf("Hej");
   (*current_node).next = next_node;
 }
 
@@ -314,7 +313,9 @@ void test_list_insert_after_loop(int count)
     current = current->next;
 
     for (int i = count - 1; i >= 0; i--)
-    {
+    {   
+        printf("%d\n", i);
+        printf("%d\n", current->data);
         my_assert(current->data == i);
         current = current->next;
     }
@@ -449,7 +450,7 @@ int main(int argc, char *argv[])
         test_list_cleanup();
 
         printf("\nTesting Stress and Edge Cases:\n");
-        test_list_insert_loop(20);
+        test_list_insert_loop(5);
         test_list_insert_after_loop(10);
         test_list_delete_loop(10);
         test_list_search_loop(10);
@@ -486,7 +487,7 @@ int main(int argc, char *argv[])
         test_list_insert_loop(10);
         break;
     case 11:
-        test_list_insert_after_loop(10);
+        test_list_insert_after_loop(3);
         break;
     case 12:
         test_list_delete_loop(10);

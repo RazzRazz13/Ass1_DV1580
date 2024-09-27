@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include <assert.h>
 #include "memory_manager.h"
-#include "common_defs.h"
 
 typedef struct Node {
   uint16_t data; // Stores the data as an unsigned 16-bit integer
@@ -150,17 +148,4 @@ void list_cleanup(Node** head){
   }
   *head = NULL;
   mem_deinit();
-}
-
-int main(){
-  printf_yellow(" Testing list_cleanup ---> ");
-  Node *head = NULL;
-  list_init(&head, sizeof(Node) * 3);
-  list_insert(&head, 10);
-  list_insert(&head, 20);
-  list_insert(&head, 30);
-
-  list_cleanup(&head);
-  assert(head == NULL);
-  printf_green("[PASS].\n");
 }
