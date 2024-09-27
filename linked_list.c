@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <assert.h>
 #include "memory_manager.h"
+#include "common_defs.h"
 
 typedef struct Node {
   uint16_t data; // Stores the data as an unsigned 16-bit integer
@@ -12,21 +14,32 @@ typedef struct Node {
 
 static Node* firstnode;
 
-void list_init(Node** head){
-  mem_init(4048);
+void list_init(Node** head, size_t size){
+  mem_init(size);
   *head = NULL;
 }
 
-void list_insert(Node** head, int data){
+void list_insert(Node** head, uint16_t data){
 
   Node* next_node = (Node*)mem_alloc(sizeof(Node));
   (*next_node).data = data;
-  (*next_node).next = *head;
-  *head = next_node;
+  (*next_node).next = NULL;
+  
+  Node* current_node = *head;
 
+  if (!current_node){
+    *head = next_node;
+    return;
+  }
+
+  while((*current_node).next){
+    current_node = (*current_node).next;
+  }
+
+  (*current_node).next = next_node;
 }
 
-void list_insert_after(Node* prev_node, int data){
+void list_insert_after(Node* prev_node, uint16_t data){
 
   Node* next_node = (Node*)mem_alloc(sizeof(Node));
 
@@ -36,7 +49,7 @@ void list_insert_after(Node* prev_node, int data){
   (*prev_node).next = next_node;
 }
 
-void list_insert_before(Node** head, Node* next_node, int data){
+void list_insert_before(Node** head, Node* next_node, uint16_t data){
 
   Node* prev_node = (Node*)mem_alloc(sizeof(Node));
 
@@ -44,6 +57,11 @@ void list_insert_before(Node** head, Node* next_node, int data){
   (*prev_node).next = next_node;
 
   Node* current_node = *head;
+
+  if (current_node == next_node){
+    *head = prev_node;
+    return;
+  }
 
   while((*current_node).next != next_node){
     current_node = (*current_node).next;
@@ -53,23 +71,26 @@ void list_insert_before(Node** head, Node* next_node, int data){
   
 }
 
-void list_delete(Node** head, int data){
+void list_delete(Node** head, uint16_t data){
   Node* current_node = *head;
   Node* previous_node;
 
-  while(current_node){
-    if((*current_node).data == data){
-      (*previous_node).next = (*current_node).next;
-      mem_free((char*)current_node);
-      return;
-    }
+  if((*current_node).data == data){
+    *head = (*current_node).next;
+    mem_free((char*)current_node);
+    return;
+  }
+
+  while((*current_node).data != data){
     previous_node = current_node;
     current_node = (*current_node).next;
   }
 
+  (*previous_node).next = (*current_node).next;
+  mem_free((char*)current_node);
 }
 
-Node* list_search(Node** head, int data){
+Node* list_search(Node** head, uint16_t data){
   Node* current_node = *head;
   while(current_node){
     if((*current_node).data == data){
@@ -115,6 +136,7 @@ int list_count_nodes(Node** head){
   int count = 0;
   while(current_node){
       count = ++count;
+      current_node = (*current_node).next;
   }
   return count;
 }
@@ -126,5 +148,19 @@ void list_cleanup(Node** head){
     mem_free((char*)current_node);
     current_node = next_node;
   }
+  *head = NULL;
   mem_deinit();
+}
+
+int main(){
+  printf_yellow(" Testing list_cleanup ---> ");
+  Node *head = NULL;
+  list_init(&head, sizeof(Node) * 3);
+  list_insert(&head, 10);
+  list_insert(&head, 20);
+  list_insert(&head, 30);
+
+  list_cleanup(&head);
+  assert(head == NULL);
+  printf_green("[PASS].\n");
 }

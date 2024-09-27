@@ -4,6 +4,7 @@
         "memory_manager.h": "c",
         "string.h": "c",
         "stdlib.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "linked_list.h": "c"
     }
 }
