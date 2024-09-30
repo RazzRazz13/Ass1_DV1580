@@ -13,6 +13,8 @@ typedef struct Memory_Block {
 static Memory_Block* first_block;
 static void* memorypool;
 
+
+
 void mem_init(size_t size){
     memorypool = malloc(size);
     first_block = (Memory_Block*)(char*)memorypool + sizeof(Memory_Block);
@@ -22,6 +24,7 @@ void mem_init(size_t size){
 }
 
 void* mem_alloc(size_t size) {
+
     if (size == 0) {
         return NULL; 
     }

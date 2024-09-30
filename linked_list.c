@@ -100,33 +100,38 @@ Node* list_search(Node** head, uint16_t data){
 
 void list_display(Node** head){
   Node* current_node = *head;
-  int count = 0;
-  int myNumbers[4];
+  printf("[");
   while(current_node){
-    myNumbers[count] = (*current_node).data;
+    printf("%d",(*current_node).data);
     current_node = (*current_node).next;
-    count = ++count;
+    if (current_node != NULL){
+      printf(",");
+    }  else{
+      printf("]");
+    }
   }
 }
 
 void list_display_range(Node** head, Node* start_node, Node* end_node){
   Node* current_node = *head;
-  int count = 0;
   int active;
-  int myNumbers[4];
+  printf("[");
   while(current_node){
-    if (current_node == start_node){
+    if (current_node == start_node || start_node == NULL){
       active = 1;
     }
     if (active == 1){
-      myNumbers[count] = (*current_node).data;
-      count = ++count;
+      printf("%d",(*current_node).data);
     }
     if (current_node == end_node){
       active = 0;
     }
   current_node = (*current_node).next;
+  if (current_node != NULL && active == 1){
+        printf(",");
+      }
   }
+  printf("]");
 }
 
 int list_count_nodes(Node** head){
@@ -148,4 +153,22 @@ void list_cleanup(Node** head){
   }
   *head = NULL;
   mem_deinit();
+}
+
+int main(){
+  Node *head = NULL;
+  list_init(&head, sizeof(Node) *6);
+  list_insert(&head, 10);
+  list_insert(&head, 20);
+  list_insert(&head, 30);
+  list_insert(&head, 40);
+  list_insert(&head, 50);
+  list_insert(&head, 60);
+  Node *yes = list_search(&head, 20);
+  Node *no = list_search(&head, 50);
+  list_display_range(&head,yes,no);
+
+
+
+
 }
