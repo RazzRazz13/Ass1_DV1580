@@ -45,6 +45,7 @@ void* mem_alloc(size_t size) {
         }
         current_block = (*current_block).next;
     }
+    return;
 }
 
 void mem_free(void* block) {

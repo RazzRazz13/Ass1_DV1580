@@ -7,7 +7,10 @@
 #include <stdint.h>
 #include "memory_manager.h"
 
-typedef struct Node Node;
+typedef struct Node {
+    uint16_t data;
+    struct Node* next;
+} Node;
 
 void list_init(Node** head, size_t size);
 
