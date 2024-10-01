@@ -31,29 +31,66 @@ void* mem_alloc(size_t size) {
     while(current_block){ //Iterates all existing blocks in memorypool
         if ((*current_block).free == 1 && (*current_block).size >= size){
             if ((*current_block).size > size){ //If the current block is free and its size is greater than the allocating size: use it 
+                printf("Hej");
                 Memory_Block* next_block = (Memory_Block*)((char*)current_block + size + sizeof(Memory_Block)); //Creating new empty block
+                printf("Hej");
                 (*next_block).free = 1;
                 (*next_block).size = (*current_block).size - size;
                 (*next_block).next = (*current_block).next;
                 (*current_block).free = 0;
                 (*current_block).size = size;
                 (*current_block).next = next_block; //Setting the found block as allocated han connecting it to the new empty block
+                printf("Hej");
             } else {
                 (*current_block).free = 0; //This will be run when current block is equal in size to the allocating
             }
+            printf("Hej");
             return (char*)current_block; //Returns pointer to the allocated block
         }
         current_block = (*current_block).next;
     }
-    return;
+    //return;
 }
 
 void mem_free(void* block) {
     if(block == NULL){
         return;
     }
-    Memory_Block* current_block = (Memory_Block*)((char*)block);
-    (*current_block).free = 1; //Sets the intended block as free
+    Memory_Block* freed_block = (Memory_Block*)((char*)block);
+    Memory_Block* current_block = first_block;
+    int free_before = 0;
+    int free_after = 0;
+    
+    if (freed_block != current_block){
+        while ((*current_block).next != freed_block && (*current_block).next != NULL){
+            current_block = (*current_block).next;
+        }
+        if ((*current_block).free == 1 && (*current_block).next == freed_block){
+            free_before = 1;
+        }
+    }
+
+    Memory_Block* next_block = (*freed_block).next;
+    if (next_block != NULL && (*next_block).free == 1){
+        free_after = 1;
+    }
+
+    if(free_after == 1 && free_before == 1){
+        (*current_block).size = (*current_block).size + (*freed_block).size + (*next_block).size;
+        (*current_block).next = (*next_block).next;
+
+    } else if (free_after == 1){
+        (*freed_block).size = (*freed_block).size + (*next_block).size;
+        (*freed_block).next = (*next_block).next;
+        (*freed_block).free = 1;
+    
+    } else if (free_before == 1){
+        (*current_block).size = (*current_block).size + (*freed_block).size;
+        (*current_block).next = (*freed_block).next;
+
+    } else {
+        (*freed_block).free = 1; //Sets the intended block as free
+    }
 }
 
 void* mem_resize(void* block, size_t size){
@@ -80,3 +117,4 @@ void* mem_resize(void* block, size_t size){
 void mem_deinit(){
     free(memorypool); //Freeing the memorypool
 }
+
