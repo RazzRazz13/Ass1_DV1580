@@ -49,6 +49,9 @@ void* mem_alloc(size_t size) {
 }
 
 void mem_free(void* block) {
+    if(block == NULL){
+        return;
+    }
     Memory_Block* current_block = (Memory_Block*)((char*)block);
     (*current_block).free = 1; //Sets the intended block as free
 }
