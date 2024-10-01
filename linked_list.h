@@ -1,6 +1,12 @@
 #ifndef MY_H
 #define MY_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include "memory_manager.h"
+
 typedef struct Node Node;
 
 void list_init(Node** head, size_t size);

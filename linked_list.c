@@ -146,22 +146,3 @@ void list_cleanup(Node** head){
   *head = NULL; //Setting the head of the list to NULL
   mem_deinit();
 }
-
-int main(){
-  printf(" Testing list_count_nodes ---> ");
-  Node *head = NULL;
-  list_init(&head, sizeof(Node) * 3);
-  list_insert(&head, 10);
-  list_insert(&head, 20);
-  list_insert(&head, 30);
-
-  printf(" Testing list_count_nodes ---> ");
-  int count = list_count_nodes(&head);
-  printf(" Testing list_count_nodes ---> ");
-  assert(count == 3);
-  
-  
-  
-  list_cleanup(&head);
-  printf("[PASS].\n");
-}
