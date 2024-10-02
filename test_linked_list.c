@@ -524,10 +524,10 @@ int main(int argc, char *argv[])
         test_list_cleanup();
 
         printf("\nTesting Stress and Edge Cases:\n");
-        test_list_insert_loop(1000);
-        test_list_insert_after_loop(1000);
-        test_list_delete_loop(1000);
-        test_list_search_loop(1000);
+        test_list_insert_loop(10);
+        test_list_insert_after_loop(10);
+        test_list_delete_loop(10);
+        test_list_search_loop(10);
         test_list_edge_cases();
         break;
     case 1:

@@ -56,8 +56,12 @@ void test_random_blocks()
     srand(time(NULL));
     int nBlocks = 1000 + rand() % 10000;
     int blockSize = rand() % 1024;
+    printf("\n%d\n", nBlocks);
+    printf("\n%d\n", blockSize);
 
     int memSize = nBlocks * 1024;
+
+    printf("\n%d\n", memSize);
 
     mem_init(memSize);
     void *blocks[nBlocks];
@@ -68,6 +72,7 @@ void test_random_blocks()
     for (int k = 0; k < nBlocks; k++)
     {
         blocks[k] = mem_alloc(blockSize);
+        printf("\n%d\n", k);
         my_assert(blocks[k] != NULL);
         blockSize = rand() % 1024;
     }
