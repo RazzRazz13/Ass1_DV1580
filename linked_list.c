@@ -147,7 +147,7 @@ int list_count_nodes(Node** head){
 
 void list_cleanup(Node** head){
   *head = NULL; //Setting the head of the list to NULL
-  mem_deinit();
+  //mem_deinit();
 }
 
 /*void main(){
