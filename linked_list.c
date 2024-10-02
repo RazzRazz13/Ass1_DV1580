@@ -95,12 +95,12 @@ Node* list_search(Node** head, uint16_t data){
 
 void list_display(Node** head){
   Node* current_node = *head;
-  printf("\n[");
+  printf("[");
   while(current_node){ //Iterates the list
     printf("%d",(*current_node).data); //Printing the nodes ddata
     current_node = (*current_node).next;
     if (current_node != NULL){ //Prints , if there nodes left and prints ] if its the last node
-      printf(",");
+      printf(", ");
     }  else{
       printf("]");
     }
@@ -109,8 +109,8 @@ void list_display(Node** head){
 
 void list_display_range(Node** head, Node* start_node, Node* end_node){
   Node* current_node = *head;
-  int active;
-  printf("\n[");
+  int active = 0;
+  printf("[");
   if (start_node == NULL){
     active = 1;
   }
@@ -126,7 +126,7 @@ void list_display_range(Node** head, Node* start_node, Node* end_node){
     }
   current_node = (*current_node).next;
   if (current_node != NULL && active == 1){ //Prints , if there is nodes left and print is active
-        printf(",");
+        printf(", ");
       }
   }
   printf("]");
@@ -148,21 +148,3 @@ void list_cleanup(Node** head){
   *head = NULL; //Setting the head of the list to NULL
   mem_deinit();
 }
-
-/*int main(){
-  printf("  Testing list_display ...  ---> ");
-  Node *head = NULL;
-  list_init(&head, sizeof(Node) * 6);
-  list_insert(&head, 19);
-  list_insert(&head, 57);
-  list_insert(&head, 33);
-  list_insert(&head, 28);
-  list_insert(&head, 38);
-  list_insert(&head, 56);
-  list_display(&head);
-  Node *second = list_search(&head, 57);
-  Node *third = list_search(&head, 33);
-  list_display_range(&head, second, NULL);
-  list_display_range(&head, NULL, third);
-  list_display_range(&head, second, third);
-}*/
