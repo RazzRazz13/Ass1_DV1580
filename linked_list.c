@@ -35,7 +35,7 @@ void list_insert(Node** head, uint16_t data){
 }
 
 void list_insert_after(Node* prev_node, uint16_t data){
-  Node* next_node = (Node*)mem_alloc(sizeof(Node));
+  Node* next_node = (Node*)mem_alloc(sizeof(Node)); //Creating a new node by allocting memory in memory manger
 
   (*next_node).data = data;
   (*next_node).next = (*prev_node).next;
@@ -96,10 +96,10 @@ Node* list_search(Node** head, uint16_t data){
 void list_display(Node** head){
   Node* current_node = *head;
   printf("[");
-  while(current_node){
-    printf("%d",(*current_node).data);
+  while(current_node){ //Iterates the list
+    printf("%d",(*current_node).data); //Printing the nodes ddata
     current_node = (*current_node).next;
-    if (current_node != NULL){
+    if (current_node != NULL){ //Prints , if there nodes left and prints ] if its the last node
       printf(",");
     }  else{
       printf("]");
@@ -111,18 +111,18 @@ void list_display_range(Node** head, Node* start_node, Node* end_node){
   Node* current_node = *head;
   int active;
   printf("[");
-  while(current_node){
-    if (current_node == start_node || start_node == NULL){
+  while(current_node){ //Iterates the list
+    if (current_node == start_node || start_node == NULL){ //Sets the print to active if start_node = NULL or startnode is current node.
       active = 1;
     }
-    if (active == 1){
+    if (active == 1){ //Prints the data if print is active
       printf("%d",(*current_node).data);
     }
-    if (current_node == end_node){
+    if (current_node == end_node){ //Deactivates the print if end_node is current node
       active = 0;
     }
   current_node = (*current_node).next;
-  if (current_node != NULL && active == 1){
+  if (current_node != NULL && active == 1){ //Prints , if there is nodes left and print is active
         printf(",");
       }
   }
@@ -135,7 +135,6 @@ int list_count_nodes(Node** head){
 
   while(current_node){ //Iterates all nodes in the list
       count = count + 1; //Adds to the count
-      printf("%d\n", (*current_node).data);
       current_node = (*current_node).next;
       return 3;
   }
@@ -146,3 +145,16 @@ void list_cleanup(Node** head){
   *head = NULL; //Setting the head of the list to NULL
   mem_deinit();
 }
+
+/*int main(){
+  printf("  Testing list_count_nodes ---> ");
+  Node *head = NULL;
+  list_init(&head, sizeof(Node) * 6);
+  list_insert(&head, 30);
+  list_insert(&head, 69);
+  list_insert(&head, 30);
+  list_insert(&head, 88);
+  list_insert(&head, 38);
+  list_insert(&head, 60);
+  list_display(&head);
+}*/

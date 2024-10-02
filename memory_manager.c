@@ -49,7 +49,7 @@ void* mem_alloc(size_t size) {
 }
 
 void mem_free(void* block) {
-    if(block == NULL){
+    if(block == NULL){ //Returns if trying to free NULL
         return;
     }
     Memory_Block* freed_block = (Memory_Block*)((char*)block);
@@ -57,32 +57,32 @@ void mem_free(void* block) {
     int free_before = 0;
     int free_after = 0;
     
-    if (freed_block != current_block){
-        while ((*current_block).next != freed_block && (*current_block).next != NULL){
+    if (freed_block != current_block){//Checks so first block isnt the freed block
+        while ((*current_block).next != freed_block && (*current_block).next != NULL){ //Iterates the list
             current_block = (*current_block).next;
         }
-        if ((*current_block).free == 1 && (*current_block).next == freed_block){
+        if ((*current_block).free == 1 && (*current_block).next == freed_block){//Checks if block before is free
             free_before = 1;
         }
     }
 
     Memory_Block* next_block = (*freed_block).next;
-    if (next_block != NULL && (*next_block).free == 1){
+    if (next_block != NULL && (*next_block).free == 1){ //Checks if block after is free
         free_after = 1;
     }
 
     if(free_after == 1 && free_before == 1){
-        (*current_block).size = (*current_block).size + (*freed_block).size + (*next_block).size;
-        (*current_block).next = (*next_block).next;
+        (*current_block).size = (*current_block).size + (*freed_block).size + (*next_block).size; //Sets the first block to all size
+        (*current_block).next = (*next_block).next; //Removes the 2 other blocks from pool
 
     } else if (free_after == 1){
-        (*freed_block).size = (*freed_block).size + (*next_block).size;
-        (*freed_block).next = (*next_block).next;
-        (*freed_block).free = 1;
+        (*freed_block).size = (*freed_block).size + (*next_block).size; //Sets the middle block to both sizes
+        (*freed_block).next = (*next_block).next; //Removes the last block from pool
+        (*freed_block).free = 1; //Frees the middle block
     
     } else if (free_before == 1){
-        (*current_block).size = (*current_block).size + (*freed_block).size;
-        (*current_block).next = (*freed_block).next;
+        (*current_block).size = (*current_block).size + (*freed_block).size; //Sets the first block to both sizes
+        (*current_block).next = (*freed_block).next; //Removes the middle block from the pool
 
     } else {
         (*freed_block).free = 1; //Sets the intended block as free
