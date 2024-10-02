@@ -149,28 +149,3 @@ void list_cleanup(Node** head){
   *head = NULL; //Setting the head of the list to NULL
   //mem_deinit();
 }
-
-/*void main(){
-  printf("  Testing list_search loop ---> ");
-  Node *head = NULL;
-  int count = 4;
-  list_init(&head, sizeof(Node) * count);
-  list_insert(&head, 0);
-  list_insert(&head, 1);
-  list_insert(&head, 2);
-  list_insert(&head, 3);
-
-
-  Node *current = head;
-  for (int i = 0; i < count; i++)
-  {
-      printf("%d\n", current->data);    
-      assert(current->data == i);
-      current = current->next;
-  }
-  
-  list_cleanup(&head);
-  printf("[PASS].\n");
-
-
-}*/
