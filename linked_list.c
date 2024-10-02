@@ -111,8 +111,11 @@ void list_display_range(Node** head, Node* start_node, Node* end_node){
   Node* current_node = *head;
   int active;
   printf("[");
+  if (start_node == NULL){
+    active = 1;
+  }
   while(current_node){ //Iterates the list
-    if (current_node == start_node || start_node == NULL){ //Sets the print to active if start_node = NULL or startnode is current node.
+    if (current_node == start_node){ //Sets the print to active if start_node = NULL or startnode is current node.
       active = 1;
     }
     if (active == 1){ //Prints the data if print is active
@@ -149,12 +152,18 @@ void list_cleanup(Node** head){
 /*int main(){
   printf("  Testing list_count_nodes ---> ");
   Node *head = NULL;
-  list_init(&head, sizeof(Node) * 6);
-  list_insert(&head, 30);
-  list_insert(&head, 69);
-  list_insert(&head, 30);
-  list_insert(&head, 88);
-  list_insert(&head, 38);
-  list_insert(&head, 60);
+  list_init(&head, sizeof(Node) * 7);
+  list_insert(&head, 98);
+  list_insert(&head, 97);
+  list_insert(&head, 27);
+  list_insert(&head, 18);
+  list_insert(&head, 64);
+  list_insert(&head, 27);
+  list_insert(&head, 17);
   list_display(&head);
+  Node *yes = list_search(&head, 97);
+  Node *no = list_search(&head, 98);
+  Node *bad = list_search(&head, 27);
+  list_display_range(&head, yes, NULL);
+  list_display_range(&head, NULL, bad);
 }*/
