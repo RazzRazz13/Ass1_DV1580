@@ -150,21 +150,19 @@ void list_cleanup(Node** head){
 }
 
 /*int main(){
-  printf("  Testing list_count_nodes ---> ");
+  printf("  Testing list_display ...  ---> ");
   Node *head = NULL;
-  list_init(&head, sizeof(Node) * 9);
-  list_insert(&head, 47);
-  list_insert(&head, 86);
-  list_insert(&head, 66);
-  list_insert(&head, 83);
-  list_insert(&head, 66);
-  list_insert(&head, 17);
-  list_insert(&head, 15);
-  list_insert(&head, 79);
-  list_insert(&head, 96);
+  list_init(&head, sizeof(Node) * 6);
+  list_insert(&head, 19);
+  list_insert(&head, 57);
+  list_insert(&head, 33);
+  list_insert(&head, 28);
+  list_insert(&head, 38);
+  list_insert(&head, 56);
   list_display(&head);
-  Node *yes = list_search(&head, 86);
-  Node *bad = list_search(&head, 66);
-  list_display_range(&head, yes, NULL);
-  list_display_range(&head, NULL, bad);
+  Node *second = list_search(&head, 57);
+  Node *third = list_search(&head, 33);
+  list_display_range(&head, second, NULL);
+  list_display_range(&head, NULL, third);
+  list_display_range(&head, second, third);
 }*/
