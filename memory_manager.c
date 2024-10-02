@@ -41,7 +41,7 @@ void* mem_alloc(size_t size) {
             } else {
                 (*current_block).free = 0; //This will be run when current block is equal in size to the allocating
             }
-            return (char*)current_block; //Returns pointer to the allocated block
+            return (char*)current_block + sizeof(Memory_Block); //Returns pointer to the allocated block
         }
         current_block = (*current_block).next;
     }
