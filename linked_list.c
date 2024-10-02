@@ -95,7 +95,7 @@ Node* list_search(Node** head, uint16_t data){
 
 void list_display(Node** head){
   Node* current_node = *head;
-  printf("[");
+  printf("\n[");
   while(current_node){ //Iterates the list
     printf("%d",(*current_node).data); //Printing the nodes ddata
     current_node = (*current_node).next;
@@ -110,7 +110,7 @@ void list_display(Node** head){
 void list_display_range(Node** head, Node* start_node, Node* end_node){
   Node* current_node = *head;
   int active;
-  printf("[");
+  printf("\n[");
   if (start_node == NULL){
     active = 1;
   }
@@ -152,18 +152,19 @@ void list_cleanup(Node** head){
 /*int main(){
   printf("  Testing list_count_nodes ---> ");
   Node *head = NULL;
-  list_init(&head, sizeof(Node) * 7);
-  list_insert(&head, 98);
-  list_insert(&head, 97);
-  list_insert(&head, 27);
-  list_insert(&head, 18);
-  list_insert(&head, 64);
-  list_insert(&head, 27);
+  list_init(&head, sizeof(Node) * 9);
+  list_insert(&head, 47);
+  list_insert(&head, 86);
+  list_insert(&head, 66);
+  list_insert(&head, 83);
+  list_insert(&head, 66);
   list_insert(&head, 17);
+  list_insert(&head, 15);
+  list_insert(&head, 79);
+  list_insert(&head, 96);
   list_display(&head);
-  Node *yes = list_search(&head, 97);
-  Node *no = list_search(&head, 98);
-  Node *bad = list_search(&head, 27);
+  Node *yes = list_search(&head, 86);
+  Node *bad = list_search(&head, 66);
   list_display_range(&head, yes, NULL);
   list_display_range(&head, NULL, bad);
 }*/
