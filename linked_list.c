@@ -140,7 +140,6 @@ int list_count_nodes(Node** head){
   while(current_node){ //Iterates all nodes in the list
       count = count + 1; //Adds to the count
       current_node = (*current_node).next;
-      return 3;
   }
   return count;
 }
